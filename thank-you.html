@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Demande reçue</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f0f4f8;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      color: #007BFF;
+      animation: fadeSlideIn 1s ease forwards;
+    }
+
+    p {
+      font-size: 1.1rem;
+      max-width: 480px;
+      margin-bottom: 2rem;
+      line-height: 1.5;
+      animation: fadeSlideIn 1.5s ease forwards;
+      animation-delay: 0.5s;
+      opacity: 0;
+    }
+
+    .code-container {
+      background: #007BFF;
+      color: white;
+      font-weight: 700;
+      font-size: 2rem;
+      padding: 1rem 2rem;
+      border-radius: 8px;
+      box-shadow: 0 6px 12px rgba(0, 123, 255, 0.4);
+      animation: pulse 2s infinite;
+      user-select: all;
+    }
+
+    @keyframes fadeSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        box-shadow: 0 6px 12px rgba(0, 123, 255, 0.4);
+      }
+      50% {
+        box-shadow: 0 8px 20px rgba(0, 123, 255, 0.7);
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Demande reçue avec succès !</h1>
+  <p>
+    Merci pour votre demande. Elle est bien enregistrée et sera traitée rapidement.
+    Vous recevrez une réponse et une validation sous peu. Veuillez garder précieusement votre code unique ci-dessous pour suivre l’état de votre dossier.
+  </p>
+  <div class="code-container" id="uniqueCode">000000000</div>
+
+  <script>
+    // Generate a unique 9-digit code
+    function generateCode() {
+      return Math.floor(100000000 + Math.random() * 900000000).toString();
+    }
+
+    const codeElement = document.getElementById('uniqueCode');
+    const params = new URLSearchParams(window.location.search);
+const code = params.get('code') || generateCode();
+codeElement.textContent = code;
+  </script>
+</body>
+</html>

