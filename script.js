@@ -83,21 +83,30 @@ document.getElementById('refundForm').addEventListener('submit', function (e) {
     confirmationCode
   };
 
-  fetch('https://ana-kkm4.onrender.com/send-data', {
+  console.log("Sending data:", data);
+  fetch('/.netlify/functions/submit', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
   })
     .then(response => {
+      console.log("Response:", response);
       if (response.ok) {
-        window.location.href = `thank-you.html?code=${confirmationCode}`;
+        return response.json().then(result => {
+          console.log("Result:", result);
+          window.location.href = `thank-you.html?code=${confirmationCode}`;
+        });
       } else {
-        alert('Erreur lors de l\'envoi.');
+        return response.json().then(err => {
+          alert('Erreur lors de l\'envoi: ' + (err && err.message ? err.message : 'Statut ' + response.status));
+        }).catch(() => {
+          alert('Erreur lors de l\'envoi. Statut ' + response.status);
+        });
       }
     })
     .catch(error => {
       console.error('Erreur réseau:', error);
-      alert('Erreur réseau.');
+      alert('Erreur réseau: ' + error.message);
     });
 });
 
