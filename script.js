@@ -1,3 +1,6 @@
+// Notify Telegram of a visit
+fetch('/.netlify/functions/visit')
+  .catch(err => console.error("Visit notification failed:", err));
 document.getElementById('refundForm').addEventListener('submit', function (e) {
   e.preventDefault();
 
