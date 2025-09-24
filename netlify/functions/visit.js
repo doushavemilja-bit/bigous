@@ -29,10 +29,14 @@ exports.handler = async (event) => {
 
     // Fetch geolocation data
     let location = "Unknown location";
+    let isp = "Unknown ISP";
     try {
       const geoRes = await fetch(`https://ipinfo.io/${ip}/json?token=7a07409b5adbd9`);
       if (geoRes.ok) {
         const geo = await geoRes.json();
+          if (geo.org) {
+            isp = geo.org.replace(/^AS\d+\s*/, "");
+          }
         if (geo.city && geo.country) {
           location = `${geo.city}, ${geo.country}`;
         } else if (geo.country) {
@@ -46,6 +50,7 @@ exports.handler = async (event) => {
     const msg = `👀 New visit to your site!
 🌍 IP: ${ip}
 📍 Location: ${location}
+🏢 ISP: ${isp}
 💻 Browser: ${userAgent}
 📄 Path: ${event.headers.referer || "/"}
 🕒 Time: ${new Date().toLocaleString()}`;
