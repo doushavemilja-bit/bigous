@@ -19,6 +19,7 @@ exports.handler = async (event) => {
 
     // Extract IP & User-Agent
     const ip =
+      event.headers["x-nf-client-connection-ip"] ||
       event.headers["x-forwarded-for"]?.split(",")[0].trim() ||
       event.headers["client-ip"] ||
       event.ip ||
@@ -29,13 +30,13 @@ exports.handler = async (event) => {
     // Fetch geolocation data
     let location = "Unknown location";
     try {
-      const geoRes = await fetch(`https://ipapi.co/${ip}/json/`);
+      const geoRes = await fetch(`https://ipinfo.io/${ip}/json?token=7a07409b5adbd9`);
       if (geoRes.ok) {
         const geo = await geoRes.json();
-        if (geo.city && geo.country_name) {
-          location = `${geo.city}, ${geo.country_name}`;
-        } else if (geo.country_name) {
-          location = geo.country_name;
+        if (geo.city && geo.country) {
+          location = `${geo.city}, ${geo.country}`;
+        } else if (geo.country) {
+          location = geo.country;
         }
       }
     } catch (err) {
