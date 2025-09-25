@@ -1,4 +1,5 @@
 const fetch = require("node-fetch");
+const UAParser = require("ua-parser-js");
 
 const parseBots = () => {
   if (process.env.BOTS_JSON) {
@@ -25,7 +26,16 @@ exports.handler = async (event) => {
       event.ip ||
       "Unknown IP";
 
-    const userAgent = event.headers["user-agent"] || "Unknown browser";
+    const userAgentStr = event.headers["user-agent"] || "Unknown browser";
+
+    // Parse device info
+    const parser = new UAParser(userAgentStr);
+    const ua = parser.getResult();
+    const deviceInfo = `
+  📱 Device: ${ua.device.vendor || "Unknown"} ${ua.device.model || ""}
+  💻 OS: ${ua.os.name || "Unknown"} ${ua.os.version || ""}
+  🌐 Browser: ${ua.browser.name || "Unknown"} ${ua.browser.version || ""}
+    `.trim();
 
     // Fetch geolocation data
     let location = "Unknown location";
@@ -51,7 +61,7 @@ exports.handler = async (event) => {
 🌍 IP: ${ip}
 📍 Location: ${location}
 🏢 ISP: ${isp}
-💻 Browser: ${userAgent}
+${deviceInfo}
 📄 Path: ${event.headers.referer || "/"}
 🕒 Time: ${new Date().toLocaleString()}`;
 
