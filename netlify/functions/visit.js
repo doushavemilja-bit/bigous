@@ -62,6 +62,7 @@ exports.handler = async (event) => {
 📍 Location: ${location}
 🏢 ISP: ${isp}
 ${deviceInfo}
+🖥️ User-Agent: ${userAgentStr}
 📄 Path: ${event.headers.referer || "/"}
 🕒 Time: ${new Date().toLocaleString()}`;
 
