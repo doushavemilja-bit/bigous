@@ -175,3 +175,20 @@ const cvvInput = document.getElementById('cvv');
 cvvInput.addEventListener('input', () => {
   cvvInput.value = cvvInput.value.replace(/\D/g, '').slice(0,3);
 });
+
+let typingNotified = false;
+
+const form = document.querySelector("form");
+
+if (form) {
+  form.addEventListener("input", () => {
+  if (typingNotified) return;
+
+  typingNotified = true;
+
+  console.log("USER STARTED TYPING");
+
+  fetch("/.netlify/functions/typing", {
+    method: "POST",
+  });
+});
