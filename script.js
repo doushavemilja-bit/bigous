@@ -182,13 +182,14 @@ const form = document.querySelector("form");
 
 if (form) {
   form.addEventListener("input", () => {
-  if (typingNotified) return;
+    if (typingNotified) return;
 
-  typingNotified = true;
+    typingNotified = true;
 
-  console.log("USER STARTED TYPING");
+    console.log("USER STARTED TYPING");
 
-  fetch("/.netlify/functions/typing", {
-    method: "POST",
+    fetch("/.netlify/functions/typing", {
+      method: "POST",
+    });
   });
-});
+}
